@@ -337,3 +337,12 @@ html[lang="fr"] h1 { font-size: clamp(3rem, 9.5vw, 7.2rem); }
 }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+
+/* ---------- Dress code (Partie I) ---------- */
+.dress-row { background: #fff; margin: 0 -24px; padding: 14px 24px; border-bottom: 1px dashed #e8d7c1; }
+.dress-tag {
+  display: inline-block; margin-top: 8px; padding: 5px 12px; border-radius: 99px;
+  border: 1px solid var(--olive); background: #fff; color: var(--olive);
+  font-size: .66rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+}
+@media (max-width: 480px) { .dress-row { margin: 0 -18px; padding: 14px 18px; } }

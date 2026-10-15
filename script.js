@@ -14,6 +14,9 @@ const translations = {
     p1Intro: "First stop: Felicita! Let's enjoy good food, cute pictures and lovely company. Come hungry for a little birthday magic. 🍝",
     info1: 'A little Italian-inspired celebration.',
     mapLink: 'Open Google Maps ↗',
+    dressTitle: 'Dress code: all white',
+    dressText: 'Wear white to Felicita.',
+    dressTag: '',
     info2Title: 'A little something is included',
     info2Text: 'Some dishes and one small drink are already planned. Any extra order will be at your own expense.',
     info3Title: 'Curious about the drinks?',
@@ -22,7 +25,7 @@ const translations = {
     menuNote: 'See the drinks menu in the popup.',
     foodAria: 'Italian food stickers',
     p2Kicker: 'Part II · After hours ✧',
-    p2Intro: "And we're not done yet! 🎉 Get into your cutest pajamas for a night of music, games, pictures, snacks and late-night conversations.",
+    p2Intro: "And we're not done yet! 🎉 Get into your cutest pajamas for a night of music, games, pictures and snacks.",
     priceLabel: 'Participation per person',
     priceValue: '30,000 Ar',
     bring1: '🎀 Cute pajamas',
@@ -69,6 +72,9 @@ const translations = {
     p1Intro: "Première étape : Felicita ! Profitons de bonne cuisine, de jolies photos et de belle compagnie. Viens avec de l'appétit pour un peu de magie d'anniversaire. 🍝",
     info1: "Une petite fête d'inspiration italienne.",
     mapLink: 'Ouvrir Google Maps ↗',
+    dressTitle: 'Dress code : tout en blanc',
+    dressText: 'Viens habillé(e) en blanc pour Felicita.',
+    dressTag: '',
     info2Title: 'Un petit quelque chose est inclus',
     info2Text: "Quelques plats et une petite boisson sont déjà prévus. Toute commande supplémentaire sera à ta charge.",
     info3Title: 'Curieux(se) de voir les boissons ?',
@@ -77,7 +83,7 @@ const translations = {
     menuNote: 'Consulte le menu des boissons dans la fenêtre pop-up.',
     foodAria: 'Autocollants de cuisine italienne',
     p2Kicker: 'Partie II · Après les heures ✧',
-    p2Intro: "Et ce n'est pas fini ! 🎉 Enfile ton plus joli pyjama pour une nuit de musique, de jeux, de photos, de snacks et de discussions tardives.",
+    p2Intro: "Et ce n'est pas fini ! 🎉 Enfile ton plus joli pyjama pour une nuit de musique, de jeux, de photos et de snacks.",
     priceLabel: 'Participation par personne',
     priceValue: '30 000 Ar',
     bring1: '🎀 Pyjamas tout mignons',
@@ -118,7 +124,7 @@ const translations = {
 let currentLang = 'en';
 let selectedChoice = '';
 let messageState = null; // null | { type: 'pick' } | { type: 'done', name }
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxNaGYnGepR-c9BRqgzhKfnf4ifi4xpT7ChEt-5XSJHXgTQM7K5xxZTIFn157ijZzkF2g/exec";
+const APPS_SCRIPT_URL = "https://formspree.io/f/mwlvwodj";
 
 function renderMessage() {
   const box = document.getElementById('rsvp-message');
@@ -210,13 +216,13 @@ document.getElementById('rsvp-form').addEventListener('submit', async (event) =>
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Origin': window.location.origin
+        'Accept': 'application/json'
       },
-      body: JSON.stringify({ name, choice: choiceLabel })
+      body: JSON.stringify({ name, choice: choiceLabel, email: 'manou@example.com' })
     });
-    if (!res.ok) throw new Error('Network response was not ok');
     const data = await res.json().catch(() => ({}));
     if (data && data.ok === false) throw new Error(data.error || 'Server returned error');
+    if (res.status >= 400) throw new Error('Request failed');
     messageState = { type: 'done', name, choice: choiceLabel };
     document.getElementById('rsvp-form').reset();
     document.querySelectorAll('.rsvp-btn').forEach((b) => b.classList.remove('active'));
